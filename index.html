@@ -93,14 +93,16 @@
           top: `${Math.random() * (nn.height - 20)}px`
         });
 
+        const width = Math.min(500, 100 + message.length * 10);
+        
         const popupButton = nn.create("button").css({
           margin: "10px",
           backgroundColor: "white",
           fontWeight: "bold",
           fontSize: fontSize,
           padding: "20px",
-          lineHeight: `${fontSize + 10}px`,
-          width: `${Math.floor(Math.random() * 500) + 200}px`, 
+          lineHeight: `${fontSize + 15}px`,
+          width: `${width}px`, 
           wordWrap: "break-word",
         });
         popupButton.innerText = message;
@@ -110,7 +112,6 @@
       }
 
       async function ahhVirus(email) {
-        await nn.sleep(Math.random() * 4000 + 500);
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
 
@@ -135,12 +136,12 @@
         const colorArray = ["#F5B700", "#04E762", "#00A1E4", "#DC0073", "#89FC00"];
 
         for (let i = 0; i < messages.length; i++) {
+          await nn.sleep(Math.random() * 4000 + 500);
           const message = messages[i];
           const color = nn.random(colorArray);
-          const fontSize = `${20 + Math.floor(Math.random() * 25)}px`;
+          const fontSize = `${15 + Math.floor(Math.random() * 35)}px`;
 
           addPopup(message, fontSize, color);
-          await nn.sleep(Math.random() * 4000 + 500);
         }
       }
 
