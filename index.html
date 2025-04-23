@@ -3,25 +3,88 @@
   <head>
     <title>Uh Oh!</title>
     <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One:ital@0;1&family=Delius+Unicase:wght@400;700&family=Diplomata+SC&family=Notable&family=Titan+One&family=Vina+Sans&display=swap" rel="stylesheet">
+
+
+    <style>
+      .delius-unicase-regular {
+        font-family: "Delius Unicase", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .delius-unicase-bold {
+        font-family: "Delius Unicase", cursive;
+        font-weight: 700;
+        font-style: normal;
+      }
+      
+      .titan-one-regular {
+        font-family: "Titan One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      
+      .vina-sans-regular {
+        font-family: "Vina Sans", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      
+      .notable-regular {
+        font-family: "Notable", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .alumni-sans-inline-one-regular {
+        font-family: "Alumni Sans Inline One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .alumni-sans-inline-one-regular-italic {
+        font-family: "Alumni Sans Inline One", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+      }
+      
+      .diplomata-sc-regular {
+        font-family: "Diplomata SC", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
   </head>
   <body>
     <script>
       /* global nn */
 
       let email = "your@email.com";
+      
+      function ahhVirus(email) {
+        
+      }
 
       async function setup() {
         //add a div requesting user email
         const askEmail = nn.create("div").css({
           padding: "20px",
-          border: "1px solid black",
+          backgroundColor: "white",
+          border: "2px solid black",
           width: "300px",
           margin: "20px auto",
-          textAlign: "center"
+          textAlign: "center",
+          lineHeight: "30px",
+          fontSize: "15px"
         });
+        askEmail.classList.add("delius-unicase-bold");
 
         const label = nn.create("label");
-        label.innerText = "Please enter your email:";
+        label.innerText = "Please Enter YOUR Email!";
         label.htmlFor = "emailInput";
 
         const input = nn.create("input");
@@ -29,18 +92,26 @@
         input.id = "emailInput";
         input.placeholder = "your@email.com";
 
-        const button = nn.create("button")
+        const button = nn.create("button").css({
+          margin: "10px 0px 10px 10px",
+          backgroundColor: "pink",
+          fontFamily: "Delius Unicase",
+          fontWeight: "bold",
+          fontSize: "12px"
+        })
         button.innerText = "submit";
         button.onclick = (() => {
           email = input.value;
           console.log(`${email}`);
+          input.value = '';
+          ahhVirus(email);
         });
 
         askEmail.append(label);
         askEmail.append(input);
         askEmail.append(button);
         nn.get("body").append(askEmail);
-        
+
         nn.get("body").css({
           display: "flex",
           flexDirection: "column",
@@ -50,6 +121,7 @@
           alignItems: "center"
         });
       }
+      
       nn.on('load', setup);
     </script>
   </body>
