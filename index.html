@@ -77,6 +77,33 @@
 
       let email = "your@email.com";
       
+      function addPopup (message) {
+        const popup = nn.create("div").addTo("body").css({
+          position: "absolute",
+          display: "inline-block",
+          textAlign: "center",
+          fontSize: "25px",
+          fontFamily: "Diplomata SC",
+          backgroundColor: "green",
+          border: "3px solid black",
+          boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px ",
+          left: `${Math.random() * (nn.width - 400)}px`,
+          top: `${Math.random() * (nn.height - 20)}px`
+          });
+        
+        const popupButton = nn.create("button").css({
+          margin: "20px",
+          backgroundColor: "white",
+          fontFamily: "Delius Unicase",
+          fontWeight: "bold",
+          fontSize: "12px"
+        });
+        popupButton.innerText = message;
+        popupButton.classList.add("flashing-image")
+
+        popup.append(popupButton);
+      }
+      
       async function ahhVirus(email) {
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
@@ -102,25 +129,8 @@
         for (let i = 0; i < messages.length; i++) {
           const message = messages[i];
           
-          const post = nn.create("div").css({
-            padding: "15px",
-            backgroundColor: "red",
-            border: "15px solid white",
-            textAlign: "center",
-            fontSize: "25px",
-            fontFamily: "Diplomata SC",
-            display: "inline-block",
-            position: "absolute",
-            color: "white",
-            fontWeight: "bold",
-            maxWidth: "500px",
-            left: `${Math.random() * (nn.width - 400)}px`,
-            top: `${Math.random() * (nn.height - 20)}px`
-          })
-          
-          post.innerText = message;
-          nn.get("body").append(post);
-          await nn.sleep(Math.random() * 4500 + 1000);
+          addPopup(message);
+          await nn.sleep(Math.random() * 2000 + 500);
         }
       }
 
@@ -180,6 +190,7 @@
       }
       
       nn.on('load', setup);
+    
     </script>
   </body>
 </html>
