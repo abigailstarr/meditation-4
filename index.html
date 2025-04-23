@@ -114,8 +114,8 @@
             color: "white",
             fontWeight: "bold",
             maxWidth: "500px",
-            left: `${Math.random() * nn.width}px`,
-            top: `${Math.random() * nn.height}px`
+            left: `${Math.random() * (nn.width - 400)}px`,
+            top: `${Math.random() * (nn.height - 20)}px`
           })
           
           post.innerText = message;
@@ -155,10 +155,12 @@
           fontSize: "12px"
         })
         button.innerText = "submit";
-        button.onclick = (() => {
+        button.onclick = (async () => {
           email = input.value;
           console.log(`${email}`);
           input.value = '';
+          await nn.sleep(200);
+          askEmail.remove();
           ahhVirus(email);
         });
 
