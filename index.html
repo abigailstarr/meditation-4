@@ -81,7 +81,7 @@
 
       let email = "your@email.com";
 
-      function addPopup(message, font, color) {
+      function addPopup(message, fontSize, color) {
         const popup = nn.create("div").addTo("body").css({
           position: "absolute",
           display: "inline-block",
@@ -94,10 +94,14 @@
         });
 
         const popupButton = nn.create("button").css({
-          margin: "20px",
+          margin: "10px",
           backgroundColor: "white",
           fontWeight: "bold",
-          fontSize: "25px",
+          fontSize: fontSize,
+          padding: "20px",
+          lineHeight: `${fontSize + 10}px`,
+          width: `${Math.floor(Math.random() * 500) + 200}px`, 
+          wordWrap: "break-word",
         });
         popupButton.innerText = message;
         popupButton.classList.add("flashing-image")
@@ -106,6 +110,7 @@
       }
 
       async function ahhVirus(email) {
+        await nn.sleep(Math.random() * 4000 + 500);
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
 
@@ -128,16 +133,14 @@
         });
 
         const colorArray = ["#F5B700", "#04E762", "#00A1E4", "#DC0073", "#89FC00"];
-        const fontArray = ["Titan One", "Vina Sans", "Notable", "Alumni Sans Inline One", "Diplomata SC"];
 
         for (let i = 0; i < messages.length; i++) {
           const message = messages[i];
           const color = nn.random(colorArray);
-          const font = nn.random(fontArray);
+          const fontSize = `${20 + Math.floor(Math.random() * 25)}px`;
 
-          addPopup(message, font, color);
-
-          await nn.sleep(Math.random() * 2000 + 500);
+          addPopup(message, fontSize, color);
+          await nn.sleep(Math.random() * 4000 + 500);
         }
       }
 
