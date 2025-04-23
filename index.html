@@ -57,6 +57,18 @@
         font-weight: 400;
         font-style: normal;
       }
+      
+      .flashing-image {
+        animation: flash 1s infinite;
+      }
+      
+      @keyFrames flash {
+        0%, 100% {
+          opacity: 1;
+        } 50% {
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
@@ -65,8 +77,51 @@
 
       let email = "your@email.com";
       
-      function ahhVirus(email) {
+      async function ahhVirus(email) {
+        const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
+        const json = await res.json();
         
+        let messages = [];
+        if (json.breaches) {
+          messages = json.breaches[0];
+        } else {
+          messages = [
+            "You are really good at creating passwords!", 
+            "NO BREACHES!!", 
+            "Data SO Safe!", 
+            "Keep up the good work.", 
+            "Password Wizard", 
+            "You must keep a spreadsheet!"
+          ];
+        }
+        
+        nn.get("body").css({
+          backgroundColor: "blue"
+        });
+        
+        for (let i = 0; i < messages.length; i++) {
+          const message = messages[i];
+          
+          const post = nn.create("div").css({
+            padding: "15px",
+            backgroundColor: "red",
+            border: "15px solid white",
+            textAlign: "center",
+            fontSize: "25px",
+            fontFamily: "Diplomata SC",
+            display: "inline-block",
+            position: "absolute",
+            color: "white",
+            fontWeight: "bold",
+            maxWidth: "500px",
+            left: `${Math.random() * nn.width}px`,
+            top: `${Math.random() * nn.height}px`
+          })
+          
+          post.innerText = message;
+          nn.get("body").append(post);
+          await nn.sleep(Math.random() * 4500 + 1000);
+        }
       }
 
       async function setup() {
