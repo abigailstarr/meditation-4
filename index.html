@@ -124,7 +124,7 @@
         }
 
         nn.get("body").css({
-          backgroundColor: "blue"
+          backgroundColor: "#faff00"
         });
 
         const colorArray = ["#F5B700", "#04E762", "#00A1E4", "#DC0073", "#89FC00"];
@@ -176,7 +176,6 @@
           email = input.value;
           console.log(`${email}`);
           input.value = '';
-          await nn.sleep(200);
           askEmail.remove();
           ahhVirus(email);
         });
