@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uh Oh!</title>
+    <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+  </head>
+  <body>
+    <script>
+      /* global nn */
+
+      let email = "your@email.com";
+
+      async function setup() {
+        //add a div requesting user email
+        const askEmail = nn.create("div").css({
+          padding: "20px",
+          border: "1px solid black",
+          width: "300px",
+          margin: "20px auto",
+          textAlign: "center"
+        });
+
+        const label = nn.create("label");
+        label.innerText = "Please enter your email:";
+        label.htmlFor = "emailInput";
+
+        const input = nn.create("input");
+        input.type = "email";
+        input.id = "emailInput";
+        input.placeholder = "your@email.com";
+
+        const button = nn.create("button")
+        button.innerText = "submit";
+        button.onclick = (() => {
+          email = input.value;
+          console.log(`${email}`);
+        });
+
+        askEmail.append(label);
+        askEmail.append(input);
+        askEmail.append(button);
+        nn.get("body").append(askEmail);
+        
+        nn.get("body").css({
+          display: "flex",
+          flexDirection: "column",
+          background: "lightpink",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center"
+        });
+      }
+      nn.on('load', setup);
+    </script>
+  </body>
+</html>
