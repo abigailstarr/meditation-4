@@ -22,42 +22,6 @@
         font-style: normal;
       }
 
-      .titan-one-regular {
-        font-family: "Titan One", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .vina-sans-regular {
-        font-family: "Vina Sans", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .notable-regular {
-        font-family: "Notable", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .alumni-sans-inline-one-regular {
-        font-family: "Alumni Sans Inline One", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-
-      .alumni-sans-inline-one-regular-italic {
-        font-family: "Alumni Sans Inline One", sans-serif;
-        font-weight: 400;
-        font-style: italic;
-      }
-
-      .diplomata-sc-regular {
-        font-family: "Diplomata SC", serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-
       .flashing-image {
         animation: flash 1s infinite;
       }
@@ -79,22 +43,27 @@
     <script>
       /* global nn */
 
+      //define initial filler email
       let email = "your@email.com";
 
+      //function to add popup message to the screen
       function addPopup(message, fontSize, color) {
+        //create neon popup box
         const popup = nn.create("div").addTo("body").css({
           position: "absolute",
           display: "inline-block",
           textAlign: "center",
           backgroundColor: color,
           border: "3px solid black",
-          boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px ",
-          left: `${Math.floor(Math.random() * nn.width)}px`,
-          top: `${Math.floor(Math.random() * nn.height)}px`
+          boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px "
         });
-
-        const width = Math.min(500, 100 + message.length * 10);
         
+        //calculate the width of boxes
+        const maxWidth = nn.width * 0.8;
+        const baseWidth = message.length * 25;
+        const width = Math.min(maxWidth, baseWidth);
+        
+        //create flashing alert message
         const popupButton = nn.create("button").css({
           margin: "10px",
           backgroundColor: "white",
@@ -103,55 +72,73 @@
           padding: "20px",
           lineHeight: `${fontSize + 15}px`,
           width: `${width}px`, 
-          wordBreak: "keep-all",
+          maxWidth: "90vw",
+          wordBreak: "break-word",
           overflowWrap: "break-word"
         });
         popupButton.innerText = message;
         popupButton.classList.add("flashing-image")
-
+        //add button to screen
         popup.append(popupButton);
-      }
+        
+        //get size of alert
+        const popupRect = popup.node().getBoundingClientRect();
+        const popupWidth = popupRect.width;
+        const popupHeight = popupRect.height;
+        
+        //position alert
+        const left = Math.floor(Math.random() * (nn.width + popupWidth)) - popupWidth / 2;
+        const top = Math.floor(Math.random() * (nn.height + popupHeight)) - popupHeight / 2;
+        
+        popup.css({
+          left: `${left}px`,
+          top: `${top}px`
+        });
 
+      }
+      //function to run message pop up seqeuence
       async function ahhVirus(email) {
+        //fetch breach report on input email
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
-
-        const breachPhrases = [
-          "They found you on {site}!",
-          "{site} leaked your data!",
-          "Hackers have hit {site}",
-          "Security isn't so tight on {site}...",
-          "Visit {site} recently?",
-          "You might want to change your {site} password...",
-          "Looks like {site} had a leak",
-          "{site} might have overshared",
-          "Hope you didn't reuse that {site} password",
-          "Found your digital footprints all over {site}",
-          "{site} has been COMPROMISED!"
-        ];
         
         let messages = [];
         if (json.breaches) {
-          let breaches = json.breaches[0];
+          //phrases if email had breaches
+          const breachPhrases = [
+            "They found you on {site}!",
+            "{site} leaked your data!",
+            "Hackers have hit {site}",
+            "Security isn't so tight on {site}...",
+            "Visit {site} recently?",
+            "You might want to change your {site} password...",
+            "Looks like {site} had a leak",
+            "{site} might have overshared",
+            "Hope you didn't reuse that {site} password",
+            "Found your digital footprints all over {site}",
+            "{site} has been COMPROMISED!"
+          ];
           
+          let breaches = json.breaches[0];
+          //randomly pair breach site with phrases
           for (let breach of breaches) {
             const temp = nn.random(breachPhrases);
             const m = temp.replace("{site}", breach || "a site");
             messages.push(m);
           }
-
+          //fetch breach analytics on email
           const res2 = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${email}`);
           const json2 = await res2.json();
-          
+          //retrieve year with the most breaches
           const years = json2.BreachMetrics.yearwise_details;
           const maxYear = parseInt(Object.entries(years[0]).reduce((a, b) => b[1] > a[1] ? b : a)[0].slice(1));
-          
+          //retrieve how many passwords were "Easy to Crack"
           const easyPass = json2.BreachMetrics.passwords_strength[0].EasyToCrack;
-          
+          //push custom alerts to messages array
           messages.push(`${maxYear} was a bad year for your data...`);
           messages.push(`YOU HAVE ${easyPass} EASY TO CRACK PASSWORDS!`);
-          
         } else {
+          //messages for emails with no breaches
           messages = [
             "You are really good at creating passwords!",
             "NO BREACHES!!",
@@ -167,7 +154,7 @@
             "CONGRATS!"
           ];
         }
-
+        //random neon color array
         const colorArray = [
           "#a1ff0a", 
           "#0aefff", 
