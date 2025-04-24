@@ -89,8 +89,8 @@
           backgroundColor: color,
           border: "3px solid black",
           boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px ",
-          left: `${Math.random() * (nn.width - 400)}px`,
-          top: `${Math.random() * (nn.height - 20)}px`
+          left: `${Math.floor(Math.random() * nn.width)}px`,
+          top: `${Math.floor(Math.random() * nn.height)}px`
         });
 
         const width = Math.min(500, 100 + message.length * 10);
@@ -103,7 +103,8 @@
           padding: "20px",
           lineHeight: `${fontSize + 15}px`,
           width: `${width}px`, 
-          wordWrap: "break-word",
+          wordBreak: "keep-all",
+          overflowWrap: "break-word"
         });
         popupButton.innerText = message;
         popupButton.classList.add("flashing-image")
@@ -123,21 +124,31 @@
             "You are really good at creating passwords!",
             "NO BREACHES!!",
             "Data SO Safe!",
-            "Keep up the good work.",
+            "Keep up the good work",
             "Password Wizard",
-            "You must keep a spreadsheet!"
+            "You must keep a spreadsheet!",
+            "UNHACKABLE",
+            "What are you hiding?",
+            "Fort Knox could never...",
+            "Password game = 100",
+            "Hackers fear you.",
+            "CONGRATS!"
           ];
         }
 
-        nn.get("body").css({
-          backgroundColor: "#faff00"
-        });
-
-        const colorArray = ["#F5B700", "#04E762", "#00A1E4", "#DC0073", "#89FC00"];
-
-        for (let i = 0; i < messages.length; i++) {
+        const colorArray = [
+          "#a1ff0a", 
+          "#0aefff", 
+          "#deff0a", 
+          "#e500a4", 
+          "#2d00f7"
+        ];
+        
+        const shuffledMessages = [...messages].sort(() => Math.random() - 0.5)
+        
+        for (let i = 0; i < (messages.length * 0.6); i++) {
           await nn.sleep(Math.random() * 4000 + 500);
-          const message = messages[i];
+          const message = shuffledMessages[i];
           const color = nn.random(colorArray);
           const fontSize = `${15 + Math.floor(Math.random() * 35)}px`;
 
@@ -178,10 +189,8 @@
         button.innerText = "submit";
         button.onclick = (async () => {
           email = input.value;
-          console.log(`${email}`);
           input.value = '';
-          await nn.sleep(200);
-          askEmail.remove();
+          await nn.sleep(2000);
           ahhVirus(email);
         });
 
@@ -192,6 +201,7 @@
 
         nn.get("body").css({
           display: "flex",
+          overflow: "hidden",
           flexDirection: "column",
           background: "lightpink",
           height: "100vh",
