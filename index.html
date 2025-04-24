@@ -59,20 +59,20 @@
         });
 
         //calculate the width of boxes
-        const maxWidth = nn.width * 0.9;
-        const baseWidth = message.length * 20;
+        const maxWidth = nn.width * 0.75;
+        const baseWidth = message.length * 15;
         const width = Math.min(maxWidth, baseWidth);
 
         //create flashing alert message
         const popupButton = nn.create("button").css({
-          margin: "2vh",
+          margin: "8px",
           backgroundColor: "white",
           fontWeight: "bold",
           fontSize: fontSize,
-          padding: "2vh",
-          lineHeight: `${fontSize + 10}px`,
+          padding: "16px",
+          lineHeight: `${fontSize + 12}px`,
           width: `${width}px`,
-          maxWidth: "90vw",
+          maxWidth: "80vw",
           wordBreak: "break-word",
           overflowWrap: "break-word"
         });
@@ -82,13 +82,13 @@
         popup.append(popupButton);
 
         //get size of alert
-        const popupRect = popup.node().getBoundingClientRect();
+        const popupRect = popup.getBoundingClientRect();
         const popupWidth = popupRect.width;
         const popupHeight = popupRect.height;
 
         //position alert
-        const left = Math.floor(Math.random() * (nn.width + popupWidth)) - popupWidth / 2;
-        const top = Math.floor(Math.random() * (nn.height + popupHeight)) - popupHeight / 2;
+        const left = Math.floor(Math.random() * (nn.width - popupWidth));
+        const top = Math.floor(Math.random() * (nn.height - popupHeight));
 
         popup.css({
           left: `${left}px`,
@@ -171,7 +171,7 @@
 
           const message = shuffledMessages[i];
           const color = nn.random(colorArray);
-          const fontSize = `${2 + Math.random() * 2.5}vw`;
+          const fontSize = `${15 + Math.random() * 35}px`;
 
           addPopup(message, fontSize, color);
         }
@@ -180,15 +180,16 @@
       async function setup() {
         //add a div requesting user email
         const askEmail = nn.create("div").css({
-          padding: "5vw",
+          padding: "20px",
           backgroundColor: "white",
           border: "2px solid black",
-          maxwidth: "90vw",
-          width: "300px",
+          width: "90vw",
+          minWidth: "150px",
+          maxWidth: "300px",
           margin: "20px auto",
           textAlign: "center",
-          lineHeight: "6vw",
-          fontSize: "4vw"
+          lineHeight: "30px",
+          fontSize: "15px"
         });
         askEmail.classList.add("delius-unicase-bold");
         //create header above input
@@ -202,12 +203,12 @@
         input.placeholder = "your@email.com";
         //create submit button
         const button = nn.create("button").css({
-          margin: "4vw",
+          margin: "10px",
           backgroundColor: "pink",
           fontFamily: "Delius Unicase",
           fontWeight: "bold",
           fontSize: "12px",
-          padding: "2vw 4vw"
+          padding: "5px"
         })
         button.innerText = "submit";
         button.onclick = (async () => {
