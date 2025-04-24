@@ -116,9 +116,42 @@
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
 
+        const breachPhrases = [
+          "They found you on {site}!",
+          "{site} leaked your data!",
+          "Hackers have hit {site}",
+          "Security isn't so tight on {site}...",
+          "Visit {site} recently?",
+          "You might want to change your {site} password...",
+          "Looks like {site} had a leak",
+          "{site} might have overshared",
+          "Hope you didn't reuse that {site} password",
+          "Found your digital footprints all over {site}",
+          "{site} has been COMPROMISED!"
+        ];
+        
         let messages = [];
         if (json.breaches) {
-          messages = json.breaches[0];
+          let breaches = json.breaches[0];
+          
+          for (let breach of breaches) {
+            const breach = breaches[i];
+            const temp = nn.random(breachPhrases);
+            const m = temp.replace("{site}", breach || "a site");
+            messages.push(m);
+          }
+
+          const res2 = await fetch(`https://api.xposedornot.com/v1/breach-analytics?email=${email}`);
+          const json2 = await res2.json();
+          
+          const years = json2.BreachMetrics.yearwise_details;
+          const maxYear = parseInt(Object.entries(years[0]).reduce((a, b) => b[1] > a[1] ? b : a)[0].slice(1));
+          
+          const easyPass = json2.BreachMetrics.passwords_strength[0].EasyToCrack;
+          
+          messages.push(`${maxYear} was a bad year for your data...`);
+          messages.push(`YOU HAVE ${easyPass} EASY TO CRACK PASSWORDS!`);
+          
         } else {
           messages = [
             "You are really good at creating passwords!",
@@ -148,10 +181,11 @@
         
         for (let i = 0; i < (messages.length * 0.6); i++) {
           await nn.sleep(Math.random() * 4000 + 500);
+          
           const message = shuffledMessages[i];
           const color = nn.random(colorArray);
           const fontSize = `${15 + Math.floor(Math.random() * 35)}px`;
-
+        
           addPopup(message, fontSize, color);
         }
       }
