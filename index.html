@@ -57,21 +57,21 @@
           border: "3px solid black",
           boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px "
         });
-        
+
         //calculate the width of boxes
-        const maxWidth = nn.width * 0.8;
-        const baseWidth = message.length * 25;
+        const maxWidth = nn.width * 0.9;
+        const baseWidth = message.length * 20;
         const width = Math.min(maxWidth, baseWidth);
-        
+
         //create flashing alert message
         const popupButton = nn.create("button").css({
-          margin: "10px",
+          margin: "2vh",
           backgroundColor: "white",
           fontWeight: "bold",
           fontSize: fontSize,
-          padding: "20px",
-          lineHeight: `${fontSize + 15}px`,
-          width: `${width}px`, 
+          padding: "2vh",
+          lineHeight: `${fontSize + 10}px`,
+          width: `${width}px`,
           maxWidth: "90vw",
           wordBreak: "break-word",
           overflowWrap: "break-word"
@@ -80,16 +80,16 @@
         popupButton.classList.add("flashing-image")
         //add button to screen
         popup.append(popupButton);
-        
+
         //get size of alert
         const popupRect = popup.node().getBoundingClientRect();
         const popupWidth = popupRect.width;
         const popupHeight = popupRect.height;
-        
+
         //position alert
         const left = Math.floor(Math.random() * (nn.width + popupWidth)) - popupWidth / 2;
         const top = Math.floor(Math.random() * (nn.height + popupHeight)) - popupHeight / 2;
-        
+
         popup.css({
           left: `${left}px`,
           top: `${top}px`
@@ -101,7 +101,7 @@
         //fetch breach report on input email
         const res = await fetch(`https://api.xposedornot.com/v1/check-email/${email}`);
         const json = await res.json();
-        
+
         let messages = [];
         if (json.breaches) {
           //phrases if email had breaches
@@ -118,8 +118,8 @@
             "Found your digital footprints all over {site}",
             "{site} has been COMPROMISED!"
           ];
-          
-          let breaches = json.breaches[0];
+
+          const breaches = json.breaches[0];
           //randomly pair breach site with phrases
           for (let breach of breaches) {
             const temp = nn.random(breachPhrases);
@@ -156,22 +156,23 @@
         }
         //random neon color array
         const colorArray = [
-          "#a1ff0a", 
-          "#0aefff", 
-          "#deff0a", 
-          "#e500a4", 
+          "#a1ff0a",
+          "#0aefff",
+          "#deff0a",
+          "#e500a4",
           "#2d00f7"
         ];
-        
+
+        //shuffle messages for more randomness
         const shuffledMessages = [...messages].sort(() => Math.random() - 0.5)
-        
+        //add all messages to the screen
         for (let i = 0; i < (messages.length * 0.6); i++) {
           await nn.sleep(Math.random() * 2000 + 500);
-          
+
           const message = shuffledMessages[i];
           const color = nn.random(colorArray);
-          const fontSize = `${15 + Math.floor(Math.random() * 35)}px`;
-        
+          const fontSize = `${2 + Math.random() * 2.5}vw`;
+
           addPopup(message, fontSize, color);
         }
       }
@@ -179,35 +180,38 @@
       async function setup() {
         //add a div requesting user email
         const askEmail = nn.create("div").css({
-          padding: "20px",
+          padding: "5vw",
           backgroundColor: "white",
           border: "2px solid black",
+          maxwidth: "90vw",
           width: "300px",
           margin: "20px auto",
           textAlign: "center",
-          lineHeight: "30px",
-          fontSize: "15px"
+          lineHeight: "6vw",
+          fontSize: "4vw"
         });
         askEmail.classList.add("delius-unicase-bold");
-
+        //create header above input
         const label = nn.create("label");
         label.innerText = "Please Enter YOUR Email!";
         label.htmlFor = "emailInput";
-
+        //create input box
         const input = nn.create("input");
         input.type = "email";
         input.id = "emailInput";
         input.placeholder = "your@email.com";
-
+        //create submit button
         const button = nn.create("button").css({
-          margin: "10px 0px 10px 10px",
+          margin: "4vw",
           backgroundColor: "pink",
           fontFamily: "Delius Unicase",
           fontWeight: "bold",
-          fontSize: "12px"
+          fontSize: "12px",
+          padding: "2vw 4vw"
         })
         button.innerText = "submit";
         button.onclick = (async () => {
+          //initiate popup
           email = input.value;
           input.value = '';
           await nn.sleep(1000);
@@ -218,7 +222,7 @@
         askEmail.append(input);
         askEmail.append(button);
         nn.get("body").append(askEmail);
-
+        //style the background
         nn.get("body").css({
           display: "flex",
           overflow: "hidden",
