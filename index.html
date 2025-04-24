@@ -45,10 +45,13 @@
 
       //define initial filler email
       let email = "your@email.com";
+      
+      //check if mobile
+      const isMobile = nn.width < 500;
 
       //function to add popup message to the screen
       function addPopup(message, fontSize, color) {
-        //create neon popup box
+         //create neon popup box
         const popup = nn.create("div").addTo("body").css({
           position: "absolute",
           display: "inline-block",
@@ -59,7 +62,7 @@
         });
 
         //calculate the width of boxes
-        const maxWidth = nn.width * 0.75;
+        const maxWidth = nn.width * (isMobile ? 0.9 : 0.75);
         const baseWidth = message.length * 15;
         const width = Math.min(maxWidth, baseWidth);
 
@@ -68,11 +71,11 @@
           margin: "8px",
           backgroundColor: "white",
           fontWeight: "bold",
-          fontSize: fontSize,
-          padding: "16px",
-          lineHeight: `${fontSize + 12}px`,
+          fontSize: isMobile ? "22px" : fontSize,
+          padding: isMobile ? "20px" : "16px",
+          lineHeight: isMobile ? "28px" : `${fontSize + 12}px`,
           width: `${width}px`,
-          maxWidth: "80vw",
+          maxWidth: "90vw",
           wordBreak: "break-word",
           overflowWrap: "break-word"
         });
@@ -183,9 +186,8 @@
           padding: "20px",
           backgroundColor: "white",
           border: "2px solid black",
-          width: "90vw",
           minWidth: "150px",
-          maxWidth: "300px",
+          maxWidth: isMobile ? "90vw" : "300px",
           margin: "20px auto",
           textAlign: "center",
           lineHeight: "30px",
