@@ -135,7 +135,6 @@
           let breaches = json.breaches[0];
           
           for (let breach of breaches) {
-            const breach = breaches[i];
             const temp = nn.random(breachPhrases);
             const m = temp.replace("{site}", breach || "a site");
             messages.push(m);
