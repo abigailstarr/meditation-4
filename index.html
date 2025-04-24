@@ -63,8 +63,8 @@
         });
 
         //calculate the width of boxes
-        const maxWidth = nn.width * (isMobile ? 0.9 : 0.75);
-        const baseWidth = message.length * 15;
+        const maxWidth = nn.width * (isMobile ? 0.85 : 0.75);
+        const baseWidth = message.length * (isMobile ? 10 : 15);
         const width = Math.min(maxWidth, baseWidth);
 
         //create flashing alert message
@@ -73,10 +73,10 @@
           backgroundColor: "white",
           fontWeight: "bold",
           fontSize: isMobile ? "22px" : fontSize,
-          padding: isMobile ? "20px" : "16px",
+          padding: isMobile ? "20px 12px" : "16px",
           lineHeight: isMobile ? "28px" : `${fontSize + 12}px`,
           width: `${width}px`,
-          maxWidth: "90vw",
+          maxWidth: isMobile ? "85vw" : "90vw",
           wordBreak: "break-word",
           overflowWrap: "break-word"
         });
@@ -193,11 +193,18 @@
           margin: "20px auto",
           textAlign: "center",
           lineHeight: "30px",
-          fontSize: "15px"
+          fontSize: isMobile ? "18px" : "15px"
         });
         askEmail.classList.add("delius-unicase-bold");
         //create header above input
-        const label = nn.create("label");
+        const label = nn.create("label").css({
+          width: isMobile ? "85%" : "auto",
+          padding: isMobile ? "10px" : "5px",
+          fontSize: isMobile ? "16px" : "14px",
+          marginTop: "10px",
+          boxSizing: "border-box"
+        });
+        
         label.innerText = "Please Enter YOUR Email!";
         label.htmlFor = "emailInput";
         //create input box
@@ -211,8 +218,9 @@
           backgroundColor: "pink",
           fontFamily: "Delius Unicase",
           fontWeight: "bold",
-          fontSize: "12px",
-          padding: "5px"
+          fontSize: isMobile ? "16px" : "12px",
+          padding: isMobile ? "12px 20px" : "5px",
+          marginTop: isMobile ? "15px" : "10px"
         })
         button.innerText = "submit";
         button.onclick = (async () => {
