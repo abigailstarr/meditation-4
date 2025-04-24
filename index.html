@@ -2,6 +2,7 @@
 <html lang="en-US">
   <head>
     <title>Uh Oh!</title>
+    <link rel="icon" type="image/x-icon" href="broken-shield.png">
     <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js?a=meow"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +48,7 @@
       let email = "your@email.com";
       
       //check if mobile
-      const isMobile = nn.width < 500;
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
       //function to add popup message to the screen
       function addPopup(message, fontSize, color) {
@@ -186,9 +187,9 @@
           padding: isMobile ? "30px 20px" : "20px",
           backgroundColor: "white",
           border: "2px solid black",
-          width: "90vw",
-          minWidth: "150px",
-          maxWidth: "300px",
+          width: isMobile ? "85vw" : "300px",
+          minWidth: isMobile ? "280px" : "150px",
+          maxWidth: isMobile ? "90vw" : "300px",
           margin: "20px auto",
           textAlign: "center",
           lineHeight: "30px",
