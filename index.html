@@ -179,7 +179,7 @@
         const shuffledMessages = [...messages].sort(() => Math.random() - 0.5)
         
         for (let i = 0; i < (messages.length * 0.6); i++) {
-          await nn.sleep(Math.random() * 4000 + 500);
+          await nn.sleep(Math.random() * 2000 + 500);
           
           const message = shuffledMessages[i];
           const color = nn.random(colorArray);
@@ -223,7 +223,7 @@
         button.onclick = (async () => {
           email = input.value;
           input.value = '';
-          await nn.sleep(2000);
+          await nn.sleep(1000);
           ahhVirus(email);
         });
 
