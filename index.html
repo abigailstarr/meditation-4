@@ -62,17 +62,28 @@
           boxShadow: "black 2px 2px, black 4px 4px, black 6px 6px, black 8px 8px, black 10px 10px "
         });
 
-        //calculate the width of boxes
-        const maxWidth = nn.width * (isMobile ? 0.85 : 0.75);
-        const baseWidth = message.length * (isMobile ? 10 : 15);
-        const width = Math.min(maxWidth, baseWidth);
-
+        //calculate the width of boxes, with width and height much larger on desktop
+        let width;
+        if (isMobile) {
+          const maxWidth = nn.width * 0.85;
+          const baseWidth = message.length * 10;
+          width = Math.min(maxWidth, baseWidth);
+        } else {
+          const minWidth = Math.max(300, message.length * 15);
+          const randFactor = 0.7 + Math.random() * 0.6;
+          width = Math.min(nn.width * 0.8, minWidth * randFactor);
+          
+          if (Math.random() > 0.65) {
+            width = Math.min(width * 1.5, nn.width * 0.9)
+          }
+        }
+        
         //create flashing alert message
         const popupButton = nn.create("button").css({
-          margin: "8px",
+          margin: isMobile ? "8px" : "15px",
           backgroundColor: "white",
           fontWeight: "bold",
-          fontSize: isMobile ? "22px" : fontSize,
+          fontSize: isMobile ? "22px" : `${Math.max(20, parseInt(fontSize)  * 1.2)}px`,
           padding: isMobile ? "20px 12px" : "16px",
           lineHeight: isMobile ? "28px" : `${fontSize + 12}px`,
           width: `${width}px`,
@@ -162,9 +173,19 @@
         const colorArray = [
           "#a1ff0a",
           "#0aefff",
-          "#deff0a",
-          "#e500a4",
-          "#2d00f7"
+          "#e3ff2e",
+          "#fa28be",
+          "#2d00f7",
+          "#ff204e",
+          "#fa5d14",
+          "#fff455",
+          "#d600ff",
+          "#f7050d",
+          "#ffff7f",
+          "#0096ff",
+          "#00ffdd",
+          "#00f2ff",
+          "#00ff41"
         ];
 
         //shuffle messages for more randomness
