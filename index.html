@@ -183,11 +183,11 @@
       async function setup() {
         //add a div requesting user email
         const askEmail = nn.create("div").css({
-          padding: "20px",
+          padding: isMobile ? "30px 20px" : "20px",
           backgroundColor: "white",
           border: "2px solid black",
           minWidth: "150px",
-          maxWidth: isMobile ? "95vw" : "300px",
+          maxWidth: isMobile ? "90vw" : "300px",
           margin: "20px auto",
           textAlign: "center",
           lineHeight: "30px",
